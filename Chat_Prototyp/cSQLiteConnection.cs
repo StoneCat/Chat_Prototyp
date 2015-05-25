@@ -63,6 +63,15 @@ namespace Chat_Prototyp
             return items;
         }
 
+        public bool insertUser(string sfirstname, string slastname, string susername, string suserpassword)
+        {
+            this.queryDB(@"INSERT INTO Chatuser 
+                            (UserStatusID, firstname, lastname,
+                            username, userpassword, FriendListlistID) 
+                            VALUES(1, '" + sfirstname + "', '" + slastname + "', '" + susername + "', '" + suserpassword + "', 1);");
+            return true;
+        }
+
         public void closeDB()
         {
             m_dbConnection.Close();

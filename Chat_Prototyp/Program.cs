@@ -98,6 +98,8 @@ namespace Chat_Prototyp
             this.registerwindow = new RegisterWindow();
             this.loginwindow.LoginDelegat += this.checkLogin;
             this.loginwindow.RegisterDelegat += this.startRegWindow;
+            this.registerwindow.doRegistUser += this.localDB.insertUser;
+            this.registerwindow.doOnCancel += this.closeRegWindow;
             this.loginwindow.showme();
             Application.Run();
         }
@@ -135,7 +137,12 @@ namespace Chat_Prototyp
         {
             this.loginwindow.hideme();
             this.registerwindow.showme();
-            this.loginwindow.closeme();
+        }
+
+        public void closeRegWindow()
+        {
+            this.registerwindow.hideme();
+            this.loginwindow.showme();
         }
     }
 

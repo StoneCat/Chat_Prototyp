@@ -28,7 +28,7 @@ namespace Chat_Prototyp
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (Application.OpenForms.Count == 0)
+            //if (Application.OpenForms.Count == 0)
                 Application.Exit();
         }
     }

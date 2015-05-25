@@ -2,6 +2,10 @@
 {
     partial class RegisterForm
     {
+        public delegate bool RegistUser(string sfirstname, string slastname, string susername, string suserpassword);
+        public delegate void onCancelForm();
+        public RegistUser doRegistUser;
+        public onCancelForm doOnCancel;
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -67,6 +71,7 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(171, 20);
             this.nameTextBox.TabIndex = 2;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.onTextBoxChange);
             // 
             // FirstnameLabel
             // 
@@ -83,6 +88,7 @@
             this.FirstnameTextBox.Name = "FirstnameTextBox";
             this.FirstnameTextBox.Size = new System.Drawing.Size(171, 20);
             this.FirstnameTextBox.TabIndex = 4;
+            this.FirstnameTextBox.TextChanged += new System.EventHandler(this.onTextBoxChange);
             // 
             // UsernameLabel
             // 
@@ -99,6 +105,7 @@
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(171, 20);
             this.UsernameTextBox.TabIndex = 6;
+            this.UsernameTextBox.TextChanged += new System.EventHandler(this.onTextBoxChange);
             // 
             // FirstPasswordLabel
             // 
@@ -116,6 +123,7 @@
             this.FirstPasswordTextBox.PasswordChar = '*';
             this.FirstPasswordTextBox.Size = new System.Drawing.Size(171, 20);
             this.FirstPasswordTextBox.TabIndex = 8;
+            this.FirstPasswordTextBox.TextChanged += new System.EventHandler(this.onTextBoxChange);
             // 
             // SecondPasswordLabel
             // 
@@ -133,6 +141,7 @@
             this.SecondPasswordTextBox.PasswordChar = '*';
             this.SecondPasswordTextBox.Size = new System.Drawing.Size(171, 20);
             this.SecondPasswordTextBox.TabIndex = 10;
+            this.SecondPasswordTextBox.TextChanged += new System.EventHandler(this.onTextBoxChange);
             // 
             // CancelButton
             // 
@@ -142,15 +151,18 @@
             this.CancelButton.TabIndex = 11;
             this.CancelButton.Text = "Abbrechen";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // RegisterButton
             // 
+            this.RegisterButton.Enabled = false;
             this.RegisterButton.Location = new System.Drawing.Point(98, 249);
             this.RegisterButton.Name = "RegisterButton";
             this.RegisterButton.Size = new System.Drawing.Size(89, 23);
             this.RegisterButton.TabIndex = 12;
             this.RegisterButton.Text = "Registrieren";
             this.RegisterButton.UseVisualStyleBackColor = true;
+            this.RegisterButton.Click += new System.EventHandler(this.RegisterButton_Click);
             // 
             // RegisterForm
             // 
