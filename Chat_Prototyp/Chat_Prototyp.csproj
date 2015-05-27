@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="mysql.data, Version=6.0.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\mysql.data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -49,7 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cSQLiteConnection.cs" />
+    <Compile Include="BuddyListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuddyListForm.Designer.cs">
+      <DependentUpon>BuddyListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +82,15 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SingleChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SingleChatForm.Designer.cs">
+      <DependentUpon>SingleChatForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BuddyListForm.resx">
+      <DependentUpon>BuddyListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,6 +108,9 @@
     </Compile>
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SingleChatForm.resx">
+      <DependentUpon>SingleChatForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

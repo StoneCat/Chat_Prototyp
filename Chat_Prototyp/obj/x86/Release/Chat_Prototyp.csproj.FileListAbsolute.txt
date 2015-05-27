@@ -1,0 +1,14 @@
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\bin\Release\Chat_Prototyp.exe
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\bin\Release\Chat_Prototyp.pdb
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\bin\Release\mysql.data.dll
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\bin\Release\System.Data.SQLite.dll
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\bin\Release\System.Data.SQLite.xml
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.BuddyListForm.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.Form1.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.LoginForm.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.Properties.Resources.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.RegisterForm.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.SingleChatForm.resources
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.csproj.GenerateResource.Cache
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.exe
+E:\Users\Nikolai\Desktop\Chat_Prototyp-master_me\Chat_Prototyp\obj\x86\Release\Chat_Prototyp.pdb

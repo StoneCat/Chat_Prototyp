@@ -8,10 +8,46 @@ namespace Chat_Prototyp
 {
     class cUser
     {
-        protected string username;
-        protected string firstname;
-        protected string lastname;
-        protected string status;
+        private int id;
+        private string username;
+        private string firstname;
+        private string lastname;
+        private string status;
+
+        public void setid(int inewid)
+        {
+            this.id = inewid;
+        }
+
+        public int getid() { return this.id; }
+
+        public void setusername(string snewusername)
+        {
+            this.username = snewusername;
+        }
+
+        public string getusername() { return this.username; }
+
+        public void setfirstname(string snewfirstname)
+        {
+            this.firstname = snewfirstname;
+        }
+
+        public string getfirstname() { return this.firstname; }
+
+        public void setlastname(string snewlastname)
+        {
+            this.lastname = snewlastname;
+        }
+
+        public string getlastname() { return this.lastname; }
+
+        public void setstatus(string snewstatus)
+        {
+            this.status = snewstatus;
+        }
+
+        public string getstatus() { return this.status; }
     }
 
     class cMainUser : cUser
@@ -19,21 +55,18 @@ namespace Chat_Prototyp
         private string password;
         private List<cUser> friendlist;
 
-        public cMainUser()
+        public string getpassword() { return this.password; }
+
+        public void setpassword(string snewpassword)
         {
-            
+            this.password = snewpassword;
         }
     }
 
-    class LoginWindow : LoginForm
+    class cLoginWindow : LoginForm
     {
-        public LoginWindow()
+        public cLoginWindow()
         {
-        }
-
-        public void changeLabel(string text)
-        {
-            this.LabelUsername.Text = text;
         }
 
         public string getUsernameText()
@@ -62,10 +95,61 @@ namespace Chat_Prototyp
         }
     }
 
-    class RegisterWindow : RegisterForm
+    class cRegisterWindow : RegisterForm
     {
-        public RegisterWindow()
+        public cRegisterWindow()
         {
+        }
+
+        public void showme()
+        {
+            this.Show();
+        }
+
+        public void closeme()
+        {
+            this.Close();
+        }
+
+        public void hideme()
+        {
+            this.Hide();
+        }
+    }
+
+    class cBuddyListWindow : BuddyListForm
+    {
+        public cBuddyListWindow()
+        {
+
+        }
+
+        public void changeLabel(string stext)
+        {
+            this.HeaderLabel.Text = stext;
+        }
+
+        public void showme()
+        {
+            this.Show();
+        }
+
+        public void closeme()
+        {
+            this.Close();
+        }
+
+        public void hideme()
+        {
+            this.Hide();
+        }
+    }
+
+    class cSingleChatWindow : SingleChatForm
+    {
+        public void changeLabel(string stext)
+        {
+            this.ChatInfoLabel.Text= stext;
         }
 
         public void showme()
@@ -87,19 +171,25 @@ namespace Chat_Prototyp
     class cMainController
     {
         private cMainUser mainuser = new cMainUser();
-        private LoginWindow loginwindow;
-        private RegisterWindow registerwindow;
-        private cSQLiteConnection localDB;
+        private cLoginWindow loginwindow;
+        private cRegisterWindow registerwindow;
+        private DatabaseSQLite DB;
+        private cBuddyListWindow buddywindow;
+        private List<cSingleChatWindow> ListChats;
+        private int openChatWindows = -1;
 
         public cMainController()
         {
-            this.localDB = new cSQLiteConnection();
-            this.loginwindow = new LoginWindow();
-            this.registerwindow = new RegisterWindow();
+            this.DB = new DatabaseSQLite("Data Source=ChatDatabase.sqlite;Version=3;");
+            this.loginwindow = new cLoginWindow();
+            this.registerwindow = new cRegisterWindow();
+            this.buddywindow = new cBuddyListWindow();
+            this.ListChats = new List<cSingleChatWindow>() { new cSingleChatWindow(), new cSingleChatWindow(), new cSingleChatWindow(), new cSingleChatWindow(), new cSingleChatWindow(), new cSingleChatWindow() };
             this.loginwindow.LoginDelegat += this.checkLogin;
             this.loginwindow.RegisterDelegat += this.startRegWindow;
-            this.registerwindow.doRegistUser += this.localDB.insertUser;
+            this.registerwindow.doRegistUser += this.DB.insertUser;
             this.registerwindow.doOnCancel += this.closeRegWindow;
+            this.buddywindow.openChatApplication += this.startChatWindow;
             this.loginwindow.showme();
             Application.Run();
         }
@@ -120,12 +210,24 @@ namespace Chat_Prototyp
             return result;
         }
 
+        private void doLoginAsUser(int userid)
+        {
+            this.mainuser.setid(userid);
+            //TODO Füge Username anstatt ID ein
+            this.buddywindow.changeLabel("Sie sind online als: " + this.mainuser.getid());
+            this.loginwindow.hideme();
+            this.buddywindow.showme();
+        }
+
         public void checkLogin()
         {
-            List<string> items = this.localDB.selectDB("select id from Chatuser where username = '" + this.loginwindow.getUsernameText() + "' AND userpassword = '" + this.loginwindow.getPasswordText() + "'");
-            if (items.Count() != 0)
+            if (this.DB.Open())
             {
-                this.loginwindow.changeLabel("Erfolgreich als User " + items[0]);
+                this.DB.Execute("select id from Chatuser where username = '" + this.loginwindow.getUsernameText() + "' AND userpassword = '" + this.loginwindow.getPasswordText() + "'");
+            }
+            if (this.DB.ResultSet.Count() != 0)
+            {
+                this.doLoginAsUser(Convert.ToInt32(this.DB.ResultSet[0][0]));
             }
             else
             {
@@ -143,6 +245,13 @@ namespace Chat_Prototyp
         {
             this.registerwindow.hideme();
             this.loginwindow.showme();
+        }
+
+        public void startChatWindow(string username)
+        {
+            this.openChatWindows++;
+            this.ListChats[this.openChatWindows].changeLabel("Sie chatten mit " + username);
+            this.ListChats[this.openChatWindows].showme();
         }
     }
 
