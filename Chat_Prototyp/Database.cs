@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,7 +61,7 @@ namespace Chat_Prototyp
             strCommand = "select count(table_name) from information_schema.tables where table_name='" + strTabelName + "'";
             Execute(strCommand);
 
-            if (ResultSet[0][0] == "1")
+            if (ResultSet[0][0] == "6")
                 return true;
             else
                 return false;
@@ -137,9 +137,9 @@ namespace Chat_Prototyp
                 ResultSet.Add(row);
                 nrOfRows++;
             }
-
             reader.Close();
-            reader.Close();
+            reader.Dispose();
+            sql_cmd.Dispose();
             return true;
         }
     }
@@ -200,12 +200,37 @@ namespace Chat_Prototyp
                           FriendListlistID INTEGER NOT NULL);";
                     sql_cmd.ExecuteNonQuery();
                 }
+                if (!TableExists("Friendlist"))
+                {
+                    sql_cmd.CommandText = @"CREATE TABLE IF NOT EXISTS Friendlist (
+                          userid INTEGER,
+                          friendid INTEGER);";
+                    sql_cmd.ExecuteNonQuery();
+                }
                 sql_cmd.CommandText = "delete from Chatuser;";
                 sql_cmd.ExecuteNonQuery();
                 sql_cmd.CommandText = @"INSERT INTO Chatuser 
                             (UserStatusID, firstname, lastname,
                             username, userpassword, FriendListlistID) 
-                            VALUES(1, 'admin', 'admin', 'admin', 'admin', 1);";
+                            VALUES(1, 'admin', 'admin', 'admin', 'admin', 1);
+
+                            INSERT INTO Chatuser 
+                            (UserStatusID, firstname, lastname,
+                            username, userpassword, FriendListlistID) 
+                            VALUES(2, 'Nikolai', 'Luis', 'stonecat', 'yolo', 2);
+
+                            INSERT INTO Chatuser 
+                            (UserStatusID, firstname, lastname,
+                            username, userpassword, FriendListlistID) 
+                            VALUES(2, 'bla', 'bla', 'bla', 'bla', 2);
+
+                            INSERT INTO Friendlist
+                            (userid, friendid) 
+                            VALUES(1, 2);
+
+                            INSERT INTO Friendlist
+                            (userid, friendid) 
+                            VALUES(1, 3);";
                 sql_cmd.ExecuteNonQuery();
 
                 sql_cmd.Dispose();
@@ -223,6 +248,7 @@ namespace Chat_Prototyp
             sql_cmd.CommandText = strCommand;
             SQLiteDataReader reader = sql_cmd.ExecuteReader();
 
+            ResultSet.Clear();
             nrOfRows = 0;
             nrOfCols = 0;
             while (reader.Read())
