@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -129,6 +129,11 @@ namespace Chat_Prototyp
             this.HeaderLabel.Text = stext;
         }
 
+        public void addFriend(string username)
+        {
+            this.FriendListBox.Items.Add(username);
+        }
+
         public void showme()
         {
             this.Show();
@@ -210,12 +215,26 @@ namespace Chat_Prototyp
             return result;
         }
 
-        private void doLoginAsUser(int userid)
+        private void generateFriendList()
         {
-            this.mainuser.setid(userid);
-            //TODO Füge Username anstatt ID ein
-            this.buddywindow.changeLabel("Sie sind online als: " + this.mainuser.getid());
+            this.DB.Execute("select username from Chatuser where id in (select friendid from Friendlist where userid=" + this.mainuser.getid() + ");");
+            for (int i = 0; i < DB.nrOfRows; i++)
+            {
+                this.buddywindow.addFriend(this.DB.ResultSet[i][0]);
+            }
+        }
+
+        private void doLoginAsUser(List<List<string>> ResultSet)
+        {
+            this.mainuser.setid(Convert.ToInt32(ResultSet[0][0]));
+            this.mainuser.setstatus(ResultSet[0][1]);
+            this.mainuser.setfirstname(ResultSet[0][2]);
+            this.mainuser.setlastname(ResultSet[0][3]);
+            this.mainuser.setusername(ResultSet[0][4]);
+            this.buddywindow.changeLabel("Sie sind online als: " + this.mainuser.getusername());
             this.loginwindow.hideme();
+
+            generateFriendList();
             this.buddywindow.showme();
         }
 
@@ -223,16 +242,17 @@ namespace Chat_Prototyp
         {
             if (this.DB.Open())
             {
-                this.DB.Execute("select id from Chatuser where username = '" + this.loginwindow.getUsernameText() + "' AND userpassword = '" + this.loginwindow.getPasswordText() + "'");
+                this.DB.Execute("select * from Chatuser where username = '" + this.loginwindow.getUsernameText() + "' AND userpassword = '" + this.loginwindow.getPasswordText() + "'");
+                if (this.DB.ResultSet.Count() != 0)
+                {
+                    this.doLoginAsUser(DB.ResultSet);
+                }
+                else
+                {
+                    MessageBox.Show("Benutzername oder Passwort sind falsch!", "Anmelden fehlgeschlagen");
+                }
             }
-            if (this.DB.ResultSet.Count() != 0)
-            {
-                this.doLoginAsUser(Convert.ToInt32(this.DB.ResultSet[0][0]));
-            }
-            else
-            {
-                MessageBox.Show("Benutzername oder Passwort sind falsch!", "Anmelden fehlgeschlagen");
-            }
+           
         }
 
         public void startRegWindow()
