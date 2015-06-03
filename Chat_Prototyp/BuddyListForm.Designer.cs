@@ -1,4 +1,4 @@
-﻿namespace Chat_Prototyp
+namespace Chat_Prototyp
 {
     partial class BuddyListForm
     {
@@ -56,12 +56,6 @@
             // FriendListBox
             // 
             this.FriendListBox.FormattingEnabled = true;
-            this.FriendListBox.Items.AddRange(new object[] {
-            "Beispiel",
-            "Username",
-            "nicht",
-            "ausder",
-            "Datenbank"});
             this.FriendListBox.Location = new System.Drawing.Point(16, 56);
             this.FriendListBox.Name = "FriendListBox";
             this.FriendListBox.Size = new System.Drawing.Size(120, 95);
